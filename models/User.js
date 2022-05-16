@@ -15,7 +15,13 @@ const UserSchema = new Schema({
         unique: true,
         match: '[a-z0-9]+@[a-z]+\.edu\.[a-z]{2,3}'
     },
-    thoughts: [Thought],
+    thoughts: [
+        {
+            // tells it where the data come will come from
+            type: Schema.Types.ObjectId,
+            ref: 'Thought'
+        }
+    ],
     friends: [this]
 },
 {
