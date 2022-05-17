@@ -27,8 +27,7 @@ const userController =  {
         .populate({
             path: 'thoughts',
             select: '-__v'
-        })
-        .populate({
+        }).populate({
             path: 'friends',
             select: '-__v'
         })
@@ -72,7 +71,29 @@ const userController =  {
         }).catch(err => {
             console.log(err)
         })
+    },
+
+    // Route to add a friend to friend list
+    addFriend({params}, res){
+        User.findOneAndUpdate({ _id: params.userId}, { $push : { friends: params.friendId}}, { new: true})
+        .then(userData => {
+            res.json(userData)
+        }).catch(err => {
+            console.log(err)
+        })
+    },
+    // Route to remove Friend
+    removeFriend({params},res){
+        console.log(params)
+        User.findOneAndUpdate({_id: params.userId}, { $pull: { friends: params.friendId }}, { new: true})
+        .then(userData => {
+            res.json(userData)
+        }).catch(err => {
+            console.log(err)
+        })
     }
+       
+    
 }
 
 
